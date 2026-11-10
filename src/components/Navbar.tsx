@@ -1,7 +1,16 @@
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Menu } from "lucide-react";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navLinks = [
   { label: "Work", href: "#work" },
@@ -43,7 +52,6 @@ export default function Navbar() {
         {/* Logo */}
         <a
           href="#home"
-          onClick={closeMenu}
           className="display-font text-2xl font-bold tracking-tight"
         >
           Ruzzidan<span className="text-[#647C8E]">.</span>
@@ -70,53 +78,62 @@ export default function Navbar() {
           </span>
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="flex items-center justify-center text-[#171717] md:hidden"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
-
-      {/* Mobile navigation */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-[#D8D8D2] bg-[#F3F1EC] md:hidden"
+        {/* Mobile navigation */}
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          <SheetTrigger
+            className="flex items-center justify-center text-[#171717] transition-colors hover:text-[#647C8E] md:hidden"
+            aria-label="Open navigation menu"
           >
-            <div className="flex flex-col px-6 py-5">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={closeMenu}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="border-b border-[#D8D8D2] py-4 text-sm text-[#171717]"
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+            <Menu size={24} />
+          </SheetTrigger>
 
-              <div className="mt-5 flex items-center gap-2">
+          <SheetContent
+            side="right"
+            className="w-[min(88vw,380px)] max-w-none border-l border-[#D8D8D2] bg-[#F3F1EC] p-0 text-[#171717] shadow-none"
+          >
+            <SheetHeader className="border-b border-[#D8D8D2] px-6 py-7">
+              <SheetTitle className="display-font text-2xl font-bold tracking-tight">
+                Ruzzidan<span className="text-[#647C8E]">.</span>
+              </SheetTitle>
+
+              <SheetDescription className="sr-only">
+                Navigate through the portfolio sections.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="flex flex-1 flex-col px-6 py-8">
+              <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.2em] text-[#777777]">
+                Navigation
+              </p>
+
+              <div className="flex flex-col">
+                {navLinks.map((link, index) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="group flex items-center justify-between border-b border-[#D8D8D2] py-5 text-lg text-[#171717] transition-colors hover:text-[#647C8E]"
+                  >
+                    <span>{link.label}</span>
+
+                    <span className="text-xs text-[#999999] transition-transform group-hover:translate-x-1 group-hover:text-[#647C8E]">
+                      0{index + 1}
+                    </span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="mt-auto flex items-center gap-3 border-t border-[#D8D8D2] pt-6">
                 <span className="h-2 w-2 rounded-full bg-[#647C8E]" />
+
                 <span className="text-xs text-[#555555]">
                   Available for opportunities
                 </span>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </SheetContent>
+        </Sheet>
+      </nav>
     </motion.header>
   );
 }

@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const interests = [
@@ -11,7 +11,41 @@ const interests = [
   "Workflow Automation",
 ];
 
+const principles = [
+  {
+    number: "01",
+    title: "Understand the problem",
+    description:
+      "Start with the requirements and the people using the system.",
+  },
+  {
+    number: "02",
+    title: "Build with purpose",
+    description:
+      "Choose practical technologies and create maintainable solutions.",
+  },
+  {
+    number: "03",
+    title: "Improve continuously",
+    description:
+      "Test, refine and learn from every development cycle.",
+  },
+];
+
 export default function About() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 25,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <section
       id="about"
@@ -21,8 +55,9 @@ export default function About() {
 
         {/* Section label */}
         <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
+          variants={reveal}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="mb-16 text-[11px] font-medium uppercase tracking-[0.3em] text-[#647C8E]"
@@ -34,8 +69,9 @@ export default function About() {
 
           {/* Left: Main introduction */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
+            variants={reveal}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7 }}
           >
@@ -80,12 +116,14 @@ export default function About() {
 
           {/* Right: Developer interests */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
+            variants={reveal}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="flex flex-col"
           >
+
             {/* Background */}
             <div className="border-t border-[#D8D8D2] py-7">
               <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-[#647C8E]">
@@ -106,11 +144,11 @@ export default function About() {
                 Areas of Interest
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-x-5 gap-y-4">
                 {interests.map((interest) => (
                   <span
                     key={interest}
-                    className="border border-[#D8D8D2] px-3 py-2 text-[11px] text-[#555555]"
+                    className="border-b border-[#D8D8D2] pb-1 text-xs text-[#555555] transition-colors duration-200 hover:border-[#647C8E] hover:text-[#647C8E]"
                   >
                     {interest}
                   </span>
@@ -120,33 +158,20 @@ export default function About() {
 
             {/* Development approach */}
             <div className="border-t border-b border-[#D8D8D2] py-7">
-              <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-[#647C8E]">
+              <p className="mb-6 text-[10px] font-medium uppercase tracking-[0.25em] text-[#647C8E]">
                 How I Approach Development
               </p>
 
-              <div className="space-y-5">
-                {[
-                  {
-                    number: "01",
-                    title: "Understand the problem",
-                    description:
-                      "Start with the requirements and the people using the system.",
-                  },
-                  {
-                    number: "02",
-                    title: "Build with purpose",
-                    description:
-                      "Choose practical technologies and create maintainable solutions.",
-                  },
-                  {
-                    number: "03",
-                    title: "Improve continuously",
-                    description:
-                      "Test, refine and learn from every development cycle.",
-                  },
-                ].map((item) => (
-                  <div
+              <div className="space-y-6">
+                {principles.map((item) => (
+                  <motion.div
                     key={item.number}
+                    whileHover={
+                      shouldReduceMotion
+                        ? undefined
+                        : { x: 4 }
+                    }
+                    transition={{ duration: 0.2 }}
                     className="flex gap-5"
                   >
                     <span className="pt-1 text-[10px] tracking-wider text-[#647C8E]">
@@ -162,7 +187,7 @@ export default function About() {
                         {item.description}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

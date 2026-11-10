@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+
+import { motion, useReducedMotion } from "framer-motion";
 
 const experiences = [
   {
@@ -94,13 +95,28 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 25,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <section id="experience" className="bg-[#EAE8E2] px-6 py-28 md:py-36">
       <div className="mx-auto max-w-7xl">
+
         {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
+          variants={reveal}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7 }}
           className="mb-20 flex flex-col justify-between gap-6 md:flex-row md:items-end"
@@ -124,6 +140,7 @@ export default function Experience() {
 
         {/* Experience timeline */}
         <div className="relative">
+
           {/* Timeline line */}
           <div className="absolute bottom-0 left-1.75 top-0 w-px bg-[#D0CEC7] md:left-55" />
 
@@ -131,14 +148,19 @@ export default function Experience() {
             {experiences.map((experience, index) => (
               <motion.article
                 key={`${experience.company}-${experience.position}`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial="hidden"
+                whileInView="visible"
+                variants={reveal}
                 viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.7, delay: index * 0.1 }}
+                transition={{
+                  duration: 0.7,
+                  delay: shouldReduceMotion ? 0 : index * 0.1,
+                }}
                 className="relative grid gap-8 pl-10 md:grid-cols-[190px_1fr] md:gap-16 md:pl-0"
               >
+
                 {/* Timeline marker */}
-                <span className="absolute left-0 top-1.5 z-10 h-3.75 w-3.75 rounded-full border-[3px] border-[#EAE8E2] bg-[#647C8E] md:left-53.25" />
+                <span className="absolute left-0 top-1.5 z-10 h-3.75 w-3.75 rounded-full border-[3px] border-[#EAE8E2] bg-[#647C8E]" />
 
                 {/* Period */}
                 <div className="md:pt-1">
@@ -153,6 +175,8 @@ export default function Experience() {
 
                 {/* Experience content */}
                 <div className="border-b border-[#D0CEC7] pb-12">
+
+                  {/* Role heading */}
                   <div className="mb-5">
                     <h3 className="display-font text-2xl font-semibold tracking-tight text-[#171717] md:text-3xl">
                       {experience.position}
@@ -163,19 +187,26 @@ export default function Experience() {
                     </p>
                   </div>
 
+                  {/* Summary */}
                   <p className="max-w-3xl text-sm leading-8 text-[#666666]">
                     {experience.summary}
                   </p>
 
                   {/* Projects */}
-                  <div className="mt-9 space-y-8">
+                  <div className="mt-10 space-y-9">
                     {experience.projects.map((project, projectIndex) => (
-                      <div
+                      <motion.div
                         key={project.name}
+                        whileHover={
+                          shouldReduceMotion ? undefined : { x: 3 }
+                        }
+                        transition={{ duration: 0.2 }}
                         className="border-l border-[#D0CEC7] pl-5"
                       >
+
+                        {/* Project title */}
                         <div className="flex flex-wrap items-center gap-3">
-                          <span className="text-[10px] tracking-wider text-[#647C8E]">
+                          <span className="text-[10px] tabular-nums tracking-wider text-[#647C8E]">
                             0{projectIndex + 1}
                           </span>
 
@@ -184,22 +215,23 @@ export default function Experience() {
                           </h4>
                         </div>
 
+                        {/* Project description */}
                         <p className="mt-3 max-w-3xl text-xs leading-7 text-[#777777] md:text-sm">
                           {project.description}
                         </p>
 
                         {/* Project technologies */}
-                        <div className="mt-4 flex flex-wrap gap-2">
+                        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
                           {project.technologies.map((technology) => (
                             <span
                               key={technology}
-                              className="border border-[#D0CEC7] px-2.5 py-1.5 text-[10px] text-[#666666]"
+                              className="border-b border-[#D0CEC7] pb-1 text-[10px] text-[#666666] transition-colors duration-200 hover:border-[#647C8E] hover:text-[#647C8E]"
                             >
                               {technology}
                             </span>
                           ))}
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
@@ -210,8 +242,9 @@ export default function Experience() {
 
         {/* Closing note */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
+          variants={reveal}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
           className="mt-20 border-t border-[#D0CEC7] pt-8"
@@ -221,6 +254,7 @@ export default function Experience() {
             solutions and grow as a software engineer.
           </p>
         </motion.div>
+
       </div>
     </section>
   );

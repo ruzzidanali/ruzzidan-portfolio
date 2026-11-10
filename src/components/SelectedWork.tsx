@@ -24,10 +24,7 @@ const features = [
 
 export default function SelectedWork() {
   return (
-    <section
-      id="work"
-      className="bg-[#EAE8E2] px-6 py-28 md:py-36"
-    >
+    <section id="work" className="bg-[#EAE8E2] px-6 py-28 md:py-36">
       <div className="mx-auto max-w-7xl">
 
         {/* Section heading */}
@@ -67,13 +64,16 @@ export default function SelectedWork() {
           {/* Project visual */}
           <div className="group relative min-h-90 overflow-hidden bg-[#EAE8E2] md:min-h-125 lg:min-h-full">
 
-            <img
+            <motion.img
               src="/images/paceup-showcase.png"
               alt="PaceUp fitness application showcasing activity tracking, challenges, goals and personal records"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              loading="lazy"
+              whileHover={{ scale: 1.035 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="absolute inset-0 h-full w-full object-cover"
             />
 
-            <div className="absolute inset-0 bg-black/10" />
+            <div className="pointer-events-none absolute inset-0 bg-black/5 transition-colors duration-500 group-hover:bg-transparent" />
 
             <span className="absolute bottom-6 left-6 z-10 bg-[#171717] px-4 py-2 text-[10px] font-medium tracking-[0.2em] text-white">
               PROJECT / 001 — PACEUP
@@ -130,11 +130,11 @@ export default function SelectedWork() {
                   Engineering Stack
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-x-5 gap-y-3">
                   {technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="border border-[#D8D8D2] px-3 py-2 text-[11px] text-[#555555]"
+                      className="border-b border-[#D8D8D2] pb-1 text-xs font-medium text-[#555555] transition-colors duration-200 hover:border-[#647C8E] hover:text-[#647C8E]"
                     >
                       {tech}
                     </span>
@@ -143,25 +143,37 @@ export default function SelectedWork() {
               </div>
 
               {/* Core features */}
-              <div className="mt-8">
-                <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.25em] text-[#777777]">
-                  Core Features
-                </p>
+              <div className="mt-9">
+                <div className="mb-5 flex items-center justify-between">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-[#777777]">
+                    Core Features
+                  </p>
 
-                <div className="flex flex-wrap gap-2">
-                  {features.map((feature) => (
-                    <span
+                  <span className="text-[10px] text-[#999999]">
+                    09 FEATURES
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3">
+                  {features.map((feature, index) => (
+                    <div
                       key={feature}
-                      className="border border-[#D8D8D2] px-3 py-2 text-[11px] text-[#555555]"
+                      className="border-t border-[#D8D8D2] pt-3"
                     >
-                      {feature}
-                    </span>
+                      <span className="mb-2 block text-[9px] tabular-nums text-[#999999]">
+                        0{index + 1}
+                      </span>
+
+                      <span className="text-xs leading-5 text-[#555555]">
+                        {feature}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
 
               {/* Project metadata */}
-              <div className="mt-8 grid grid-cols-2 gap-5 border-t border-[#D8D8D2] pt-6">
+              <div className="mt-9 grid grid-cols-2 gap-5 border-t border-[#D8D8D2] pt-6">
 
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[#999999]">
@@ -187,12 +199,13 @@ export default function SelectedWork() {
             </div>
 
             {/* Project links */}
-            <div className="mt-10 flex flex-wrap items-center gap-6 border-t border-[#D8D8D2] pt-7">
+            <div className="mt-10 border-t border-[#D8D8D2] pt-7">
 
-              <a
+              <motion.a
                 href="https://github.com/ruzzidanali/PaceUp"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                whileHover={{ x: 4 }}
                 className="group inline-flex items-center gap-3 text-sm font-medium text-[#171717] transition-colors hover:text-[#647C8E]"
               >
                 <Code2 size={17} />
@@ -203,7 +216,7 @@ export default function SelectedWork() {
                   size={15}
                   className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
                 />
-              </a>
+              </motion.a>
 
             </div>
           </div>
@@ -212,22 +225,22 @@ export default function SelectedWork() {
         {/* Additional projects */}
         <div className="mt-6 grid gap-6 md:grid-cols-2">
 
-          <div className="border border-dashed border-[#C9C7C0] p-7 md:p-9">
+          <div className="group border border-dashed border-[#C9C7C0] p-7 transition-colors duration-300 hover:border-[#647C8E] md:p-9">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#999999]">
               02 / More Projects
             </span>
 
-            <p className="mt-5 text-sm text-[#777777]">
+            <p className="mt-5 text-sm text-[#777777] transition-colors group-hover:text-[#171717]">
               More projects coming soon.
             </p>
           </div>
 
-          <div className="border border-dashed border-[#C9C7C0] p-7 md:p-9">
+          <div className="group border border-dashed border-[#C9C7C0] p-7 transition-colors duration-300 hover:border-[#647C8E] md:p-9">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#999999]">
               03 / Experiments
             </span>
 
-            <p className="mt-5 text-sm text-[#777777]">
+            <p className="mt-5 text-sm text-[#777777] transition-colors group-hover:text-[#171717]">
               Exploring new ideas and technologies.
             </p>
           </div>

@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Code2,
   Globe2,
@@ -55,6 +55,19 @@ const categories = [
 ];
 
 export default function Technologies() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const reveal = {
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 25,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <section
       id="technologies"
@@ -64,8 +77,9 @@ export default function Technologies() {
 
         {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
+          variants={reveal}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7 }}
           className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end"
@@ -89,22 +103,26 @@ export default function Technologies() {
 
         {/* Technology categories */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
           {categories.map((category, index) => {
             const Icon = category.icon;
 
             return (
               <motion.article
                 key={category.number}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial="hidden"
+                whileInView="visible"
+                variants={reveal}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{
                   duration: 0.6,
-                  delay: (index % 2) * 0.1,
+                  delay: shouldReduceMotion ? 0 : (index % 2) * 0.1,
                 }}
+                whileHover={
+                  shouldReduceMotion ? undefined : { y: -3 }
+                }
                 className="group border border-[#D8D6D0] bg-[#F7F6F2] p-7 transition-colors duration-300 hover:border-[#647C8E] md:p-9"
               >
+
                 {/* Category header */}
                 <div className="mb-8 flex items-start justify-between">
                   <div className="flex items-center gap-3">
@@ -112,12 +130,12 @@ export default function Technologies() {
                       <Icon size={18} strokeWidth={1.6} />
                     </div>
 
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#999999]">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#999999]">
                       Category / {category.number}
                     </span>
                   </div>
 
-                  <span className="display-font text-2xl font-medium text-[#D0CEC7] transition-colors duration-300 group-hover:text-[#647C8E]">
+                  <span className="display-font text-2xl font-medium tabular-nums text-[#D0CEC7] transition-colors duration-300 group-hover:text-[#647C8E]">
                     {category.number}
                   </span>
                 </div>
@@ -132,7 +150,7 @@ export default function Technologies() {
                 </p>
 
                 {/* Technology tags */}
-                <div className="mt-7 flex flex-wrap gap-2">
+                <div className="mt-7 flex flex-wrap gap-x-2 gap-y-2">
                   {category.technologies.map((technology) => (
                     <span
                       key={technology}
@@ -145,13 +163,13 @@ export default function Technologies() {
               </motion.article>
             );
           })}
-
         </div>
 
         {/* Closing statement */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
+          variants={reveal}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
           className="mt-16 border-t border-[#D8D6D0] pt-7"
