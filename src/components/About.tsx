@@ -83,9 +83,18 @@ export default function About() {
             </h2>
 
             <div className="mt-10 max-w-2xl space-y-6 text-sm leading-8 text-[#666666] md:text-base">
+
+              {/* Personal introduction */}
               <p>
-                I'm a Full Stack Developer from Malaysia with
-                an interest in building practical software
+                Hi, I'm{" "}
+                <span className="font-semibold text-[#171717]">
+                  Muhammad Ruzzidan
+                </span>
+                , a Full Stack Developer based in Malaysia.
+              </p>
+
+              <p>
+                I'm passionate about building practical software
                 solutions across web, mobile and backend systems.
               </p>
 
@@ -120,7 +129,10 @@ export default function About() {
             whileInView="visible"
             variants={reveal}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+            transition={{
+              duration: 0.7,
+              delay: shouldReduceMotion ? 0 : 0.15,
+            }}
             className="flex flex-col"
           >
 
@@ -167,9 +179,7 @@ export default function About() {
                   <motion.div
                     key={item.number}
                     whileHover={
-                      shouldReduceMotion
-                        ? undefined
-                        : { x: 4 }
+                      shouldReduceMotion ? undefined : { x: 4 }
                     }
                     transition={{ duration: 0.2 }}
                     className="flex gap-5"
