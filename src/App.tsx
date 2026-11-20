@@ -1,5 +1,6 @@
 
 import { lazy, Suspense } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -16,7 +17,10 @@ const ComponentPlayground = lazy(
 function PortfolioHome() {
   return (
     <>
+      <Analytics />
+
       <Navbar />
+
       <main>
         <Hero />
         <SelectedWork />
